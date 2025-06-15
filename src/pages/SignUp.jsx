@@ -1,70 +1,138 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const SignUp = () => {
 
-  const [username, setUserName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [gender, setGender] = useState();
-  const [dob, setdob] = useState();
-  const [role, setRole] = useState();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [role, setRole] = useState("");
 
+  const navigate = useNavigate();
+
+  async function handleSumbit(e) {
+    e.preventDefault();
+
+    const data = {
+      username,
+      email,
+      password,
+      gender,
+      dob,
+      role
+    };
+
+    try {
+      const resp = await fetch('http://localhost:8080/signUp', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const msg = await resp.text();
+      alert(msg);
+      if (msg === "User created successfully!") navigate('/sign_in'); 
+
+    } catch (error) {
+      console.error("Error: ", error);
+      alert("Faild to submit data");
+    }
+  }
 
   return (
     <>
-      <div>
-        <form>
-          <div>
-            <label htmlFor="username">username</label>
-            <input type="text" id="username" name="username" required />
-          </div>
+      <h4>Sign up below</h4>
+      <form onSubmit={handleSumbit}>
+        <label>Username: </label>
+        <input
+          type="text"
+          name="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br /><br />
 
-          <div>
-            <label htmlFor="email">email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
+        <label>Email: </label>
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <br /><br />
 
-          <div>
-            <label htmlFor="password">password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
+        <label>Password: </label>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <br /><br />
 
-          <div>
-            <label>gender</label>
-            <input type="radio" id="genderM" name="gender" value="M" />
-            <label htmlFor="genderM">M</label>
+        <label>Gender: </label>
+        Male
+        <input
+          type="radio"
+          name="gender"
+          value="M"
+          checked={gender === "M"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        Female
+        <input
+          type="radio"
+          name="gender"
+          value="F"
+          checked={gender === "F"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        Other
+        <input
+          type="radio"
+          name="gender"
+          value="O"
+          checked={gender === "O"}
+          onChange={(e) => setGender(e.target.value)}
+        />
+        <br /><br />
 
-            <input type="radio" id="genderF" name="gender" value="F" />
-            <label htmlFor="genderF">F</label>
+        <label>DOB: </label>
+        <input
+          type="date"
+          name="dob"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+        />
+        <br /><br />
 
-            <input type="radio" id="genderO" name="gender" value="O" />
-            <label htmlFor="genderO">O</label>
-          </div>
+        <label>Role: </label>
+        ADMIN
+        <input
+          type="radio"
+          name="role"
+          value="admin"
+          checked={role === "admin"}
+          onChange={(e) => setRole(e.target.value)}
+        />
+        CUSTOMER
+        <input
+          type="radio"
+          name="role"
+          value="customer"
+          checked={role === "customer"}
+          onChange={(e) => setRole(e.target.value)}
+        />
+        <br /><br />
 
-          <div>
-            <label htmlFor="dob">dob</label>
-            <input type="date" id="dob" name="dob" />
-          </div>
-
-          <div>
-            <label>role</label>
-            <input type="radio" id="roleAdmin" name="role" value="ADMIN" />
-            <label htmlFor="roleAdmin">ADMIN</label>
-
-            <input
-              type="radio"
-              id="roleCustomer"
-              name="role"
-              value="CUSTOMER"
-            />
-            <label htmlFor="roleCustomer">CUSTOMER</label>
-          </div>
-
-          <button type="submit">SIGN UP</button>
-        </form>
-      </div>
+        <button type="submit">SIGN UP</button>
+      </form>
     </>
-  );
-};
+  )
+}
 
-export default Signup;
+export default SignUp

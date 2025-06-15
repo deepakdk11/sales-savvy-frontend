@@ -1,8 +1,12 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const AdminHome = () => {
   return (
-    <div>AdminHome</div>
+    <div>
+      <NavLink to={'/pm'}>Product Management</NavLink>
+      <NavLink to={'/um'}>User Management</NavLink>
+    </div>
   )
 }
 
