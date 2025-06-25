@@ -10,6 +10,9 @@ import AddProduct from './pages/Product/AddProduct'
 import UpdateProduct from './pages/Product/UpdateProduct'
 import DeleteProduct from './pages/Product/DeleteProduct'
 import SearchProduct from './pages/Product/SearchProduct'
+import Cart from './pages/Cart'
+import Success from './pages/Success'
+import OrderSummary from './pages/OrderSummary'
 
 
 const App = () => {
@@ -31,6 +34,11 @@ const App = () => {
         <Route path='/updateProd' element={<UpdateProduct />} />
         <Route path='/deleteProd' element={<DeleteProduct />} />
         <Route path='/SearchProd' element={<SearchProduct />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/success" element={<Success />} />
+
+         <Route path="/order-summary/:orderId" element={<OrderSummary />} />
+
       </Routes>
 
     </div>

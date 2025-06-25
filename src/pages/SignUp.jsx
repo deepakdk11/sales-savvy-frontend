@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
@@ -9,8 +8,6 @@ const SignUp = () => {
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
   const [role, setRole] = useState("");
-
-  const navigate = useNavigate();
 
   async function handleSumbit(e) {
     e.preventDefault();
@@ -35,7 +32,7 @@ const SignUp = () => {
 
       const msg = await resp.text();
       alert(msg);
-      if (msg === "User created successfully!") navigate('/sign_in'); 
+
 
     } catch (error) {
       console.error("Error: ", error);
@@ -44,7 +41,7 @@ const SignUp = () => {
   }
 
   return (
-    <>
+    <div>
       <h4>Sign up below</h4>
       <form onSubmit={handleSumbit}>
         <label>Username: </label>
@@ -131,7 +128,7 @@ const SignUp = () => {
 
         <button type="submit">SIGN UP</button>
       </form>
-    </>
+    </div>
   )
 }
 
